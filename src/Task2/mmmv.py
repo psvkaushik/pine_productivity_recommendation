@@ -12,7 +12,7 @@ from torch.utils.data import DataLoader, Dataset
 from torch.cuda.amp import autocast, GradScaler
 from torch.distributions import Normal
 from tqdm import tqdm
-
+import yaml
 # Device setup
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -277,15 +277,26 @@ def evaluate_model(model, loader, alpha=0.05):
 input_dim   = X_train_scaled.shape[1]
 num_classes = len(le.classes_)
 
+with open("config.yaml", "r") as f:
+    cfg = yaml.safe_load(f)
+
+# Extract settings
+epochs               = cfg["training"]["epochs"]
+use_feature_attention = cfg["model"]["use_feature_attention"]
+use_classifier_inputs = cfg["model"]["use_classifier_inputs"]
+hidden_dim           = cfg["model"]["hidden_dim"]
+cls_weight           = cfg["training"].get("cls_weight", 1.0)
+reg_weight           = cfg["training"].get("reg_weight", 0.5)
+alpha               = cfg["evaluation"].get("alpha", 0.05)
 model = SpeciesProductivityModel(
     input_dim, num_classes,
-    hidden_dim=128,
-    use_feature_attention=True,
-    use_classifier_inputs=True
+    hidden_dim=hidden_dim,
+    use_feature_attention=use_feature_attention,
+    use_classifier_inputs=use_classifier_inputs
 )
 
-train_model(model, train_loader, epochs=20, cls_weight=1.0, reg_weight=0.5)
-evaluate_model(model, test_loader, alpha=0.05)
+train_model(model, train_loader, epochs=epochs, cls_weight=1.0, reg_weight=0.5)
+evaluate_model(model, test_loader, alpha=alpha)
 print("--"* 20)
 print("Final evaluation on untouched test data")
 evaluate_model(model, untouched_loader, alpha=0.05)

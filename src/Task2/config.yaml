@@ -1,0 +1,14 @@
+model:
+  hidden_dim: 128
+  use_feature_attention: true
+  use_classifier_inputs: true
+
+training:
+  epochs: 20
+  cls_weight: 1.0
+  reg_weight: 0.5
+  batch_size: 512
+  learning_rate: 1e-3
+
+evaluation:
+  alpha: 0.05
