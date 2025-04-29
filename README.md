@@ -8,17 +8,16 @@
 ## 📋 Table of Contents
 1. [Project Overview](#project-overview)
 2. [Dataset & Directory Structure](#dataset--directory-structure)
-3. [Getting Started](#getting-started)
+3. [Project Structure](#project-structure)
+4. [Getting Started](#getting-started)
    - [Prerequisites](#prerequisites)
    - [Installation](#installation)
    - [Data Preparation](#data-preparation)
-4. [Usage](#usage)
+5. [Usage](#usage)
    - [Task 1: Productivity Regression](#task-1-productivity-regression)
    - [Task 2: Species & Productivity Multi-Task](#task-2-species--productivity-multi-task)
-5. [Configuration & Parameters](#configuration--parameters)
-6. [Project Structure](#project-structure)
-7. [Contributing](#contributing)
-8. [License](#license)
+6. [Configuration & Parameters](#configuration--parameters) 
+7. [License](#license)
 
 ---
 
@@ -29,6 +28,25 @@ This repository provides a two-stage pipeline to:
 - **Task 2**: Jointly classify pine species and predict productivity (multi-task learning).
 
 By default, features like `latitude`, `longitude`, `date ranges`, and `TestId` are excluded as they show minimal predictive power.
+
+---
+
+## Project Structure
+
+```
+├── data/
+│   └── ...
+├── src/
+│   ├── Task1/            # Regression scripts
+│   │   ├── clustering.ipynb
+│   │   └── Without_clustering.ipynb
+│   └── Task2/            # Multi-task scripts
+│       ├── mmmv.py
+│       └── config.yaml
+|       └── Versions_MTL_with_without_clustering.ipynb
+└── README.md
+```
+
 
 ---
 
@@ -116,24 +134,7 @@ python src/Task2/mmmv.py
 
 ---
 
-## Project Structure
 
-```
-├── data/
-│   └── ...
-├── src/
-│   ├── Task1/            # Regression scripts
-│   │   ├── clustering.ipynb
-│   │   └── Without_clustering.ipynb
-│   └── Task2/            # Multi-task scripts
-│       ├── mmmv.py
-│       └── config.yaml
-|       └── Versions_MTL_with_without_clustering.ipynb
-└── README.md
-```
-
-
----
 
 ## License
 This project is released under the Apache License. See [LICENSE](LICENSE) for details.
